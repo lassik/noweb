@@ -1,0 +1,8 @@
+#! /usr/bin/env noweb-script
+<<noweb-script>>=
+#! /bin/sh
+<<Say hello world>>
+@
+<<Say hello world>>=
+echo hello world
+@

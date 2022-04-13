@@ -1,0 +1,8 @@
+#! /usr/bin/env noweb-script
+<<noweb-script>>=
+#! /usr/bin/env python3
+<<Say hello world>>
+@
+<<Say hello world>>=
+print("hello world")
+@
