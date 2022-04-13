@@ -136,6 +136,19 @@ static void string_puts(struct string *string, const char *str)
     memcpy(string_resb(string, len), str, len);
 }
 
+static void string_putu(struct string *string, unsigned long u)
+{
+    char buffer[32];
+    char *place;
+
+    place = buffer + sizeof(buffer);
+    *--place = 0;
+    do {
+        *--place = '0' + (u % 10);
+    } while (u /= 10);
+    string_puts(string, place);
+}
+
 static void string_remove_final_slash(struct string *string)
 {
     char *limit = strchr(string->bytes, '\0');
@@ -319,7 +332,8 @@ static void script(int argc, char **argv)
     string_puts(&path, get_tmpdir());
     string_remove_final_slash(&path);
     string_puts(&path, "/" PROGNAME "-");
-    string_puts(&path, MULTIBASE_BASE32);
+    string_putu(&path, getuid());
+    string_puts(&path, "-" MULTIBASE_BASE32);
     string_puts_base32(&path, multihash, sizeof(multihash));
     string_set(&newpath, &path);
     string_puts(&newpath, ".new");
